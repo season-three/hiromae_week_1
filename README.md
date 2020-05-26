@@ -1,3 +1,7 @@
-私の趣味はスキーです。
-好きな食べ物は油そばです。
+package main
 
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, world.")
+}

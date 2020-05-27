@@ -1,19 +1,24 @@
 package main
 
 import (
-	"io/ioutil"
-	"net/http"
+	"fmt"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func main() {
-	url := "https://www.crunchbase.com/organization/zoom-video-communications#section-overview"
+	url := "https://go-tour-jp.appspot.com/welcome/1"
 
-	resp, err := http.Get(url) //①HTTPリクエスト行を入れる
+	doc, err := goquery.NewDocument(url) //①HTTPリクエスト行を入れる
 	if err != nil {
+		fmt.Printf("%s\n", err) //③万が一のエラーのためのコードを入れる
 	}
-	defer resp.Body.Close()                //③万が一のエラーのためのコードを入れる
-	body, err := ioutil.ReadAll(resp.Body) //②ReadAll入れる
 
-	println(string(body)) //④HTMLをStringで取得するコードを入れる
+	title, err := doc.Find("title").Text()
+	if err != nil {
+		fmt.Printf("%s\n", err) //③万が一のエラーのためのコードを入れる
+	}
+
+	fmt.Println("ページタイトル:" + title)
 
 }

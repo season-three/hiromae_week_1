@@ -6,7 +6,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-
 )
 
 func main() {
@@ -23,7 +22,6 @@ func main() {
 	titleresult := "ページタイトル:" + title
 	fmt.Println(titleresult)
 
-
 	//DB接続
 	db, err := gorm.Open("mysql", "scraper:11194222@tcp(localhost:3306)/scraping?charset=utf8&parseTime=true&loc=Asia%2FTokyo")
 	if err != nil {
@@ -31,15 +29,18 @@ func main() {
 	}
 	defer db.Close()
 
-
 	//構造体の作成
-	type HPtitle struct {
+	var scraping.go struct {
 		id      int
 		content string
 	}
 
-
 	//データの追加
-	db.Create（"titleresult"）
+	error := db.Create("titleresult")
+	if error != nil {
+		fmt.Println(error)
+	} else {
+		fmt.Println("データ追加成功")
+	}
 
 }

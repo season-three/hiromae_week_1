@@ -30,7 +30,7 @@ func main() {
 	defer db.Close()
 
 	//構造体の作成
-	var scraping.go struct {
+	type scraping.go struct {
 		id      int
 		content string
 	}

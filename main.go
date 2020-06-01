@@ -29,8 +29,9 @@ func main() {
 		fmt.Println(url)
 	})
 
-	doc.Find(".ipQwMb a").Each(func(s *Selection) Text() {
-		fmt.Println(s.Text())
+	doc.Find(".ipQwMb a").Each(func(s *Selection) Text() string {
+		text, _ := s.Text()
+		fmt.Println(text)
 
 	})
 

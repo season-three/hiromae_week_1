@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
-	"encoding/csv"
 
 	"github.com/PuerkitoBio/goquery"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
 )
 
 func main() {
@@ -14,9 +12,9 @@ func main() {
 
 	//構造体の作成
 	type title struct {
-		id      int
+		id    int
 		title string
-		URL string
+		URL   string
 	}
 
 	//httpアクセス
@@ -25,8 +23,15 @@ func main() {
 		fmt.Printf("%s\n", err)
 	}
 
-	title, _ := doc.Find("h3.ipQwMb")
-	fmt.Println(title)
+	//タイトル名とURLを取得。Eachを使いたい。
+	doc.Find(".ipQwMb a").Each(func(_ int, s *goquery.Selection) {
+		url, _ := s.Attr("href")
+		fmt.Println(url)
+	})
 
+	doc.Find(".ipQwMb a").Each(func(s *Selection) Text() {
+		fmt.Println(s.Text())
 
+	})
 
+}

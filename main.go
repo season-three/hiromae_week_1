@@ -28,8 +28,8 @@ func main() {
 	//タイトル名とURLを取得。Eachを使いたい。
 	doc.Find(".ipQwMb a").Each(func(_ int, s *goquery.Selection) {
 		url, _ := s.Attr("href")
-		text := s.Text()
-		fmt.Println(text)
+		title := s.Text()
+		fmt.Println(title)
 		fmt.Println(url)
 	})
 
@@ -53,9 +53,11 @@ func main() {
 	}
 	defer file2.Close()
 
+	//配列する必要あり？？
+
 	//書き出す
 	writer := csv.NewWriter(file2)
-	writer.Write([]string{text, url})
+	writer.Write(title, url)
 	writer.Flush()
 
 }

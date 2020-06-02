@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"os"
 
 	"github.com/PuerkitoBio/goquery"
 	_ "github.com/go-sql-driver/mysql"
@@ -26,13 +28,34 @@ func main() {
 	//タイトル名とURLを取得。Eachを使いたい。
 	doc.Find(".ipQwMb a").Each(func(_ int, s *goquery.Selection) {
 		url, _ := s.Attr("href")
+		text := s.Text()
+		fmt.Println(text)
 		fmt.Println(url)
 	})
 
-	doc.Find(".ipQwMb a").Each(func(s *Selection) Text() string {
-		text, _ := s.Text()
-		fmt.Println(text)
+	//Goでスクレイピングしてきたデータをcsvファイルに保存
 
-	})
+	//CSVファイル作成
+	file, err := os.Create("firstgo.csv")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	//作ったCSVファイルにデータを書き出す
+
+	//CSVファイル開く(なかったら作成する)
+	file2, err := os.OpenFile("firstgo.csv", os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file2.Close()
+
+	//書き出す
+	writer := csv.NewWriter(file2)
+	writer.Write([]string{text, url})
+	writer.Flush()
 
 }

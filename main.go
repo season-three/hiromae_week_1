@@ -13,10 +13,10 @@ func main() {
 	url := "https://news.google.com/topstories?hl=ja&gl=JP&ceid=JP:ja"
 
 	//構造体の作成
-	type title struct {
+	type titlelist struct {
 		id    int
 		title string
-		URL   string
+		url   string
 	}
 
 	//httpアクセス
@@ -53,11 +53,16 @@ func main() {
 	}
 	defer file2.Close()
 
-	//配列する必要あり？？
-
-	//書き出す
 	writer := csv.NewWriter(file2)
-	writer.Write(title, url)
-	writer.Flush()
 
+	//構造体の設定
+	v := titlelist{title, url}
+
+	//ループ処理
+	for _, v := range titlelist { //rangeはある構造体配列をポインタの参照渡しで別の構造体配列にコンバートする際に使う
+		//配列
+		content := []string{v.title, v.url}
+
+		writer.Writer(content)
+	}
 }
